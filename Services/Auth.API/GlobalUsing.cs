@@ -1,0 +1,11 @@
+﻿global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authentication;
+global using Microsoft.AspNetCore.Identity.Data;
+global using Domain.ViewModels.Response;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.AspNetCore.Mvc;
+global using Infrastructure.Enums;
+global using Domain.Options;
+global using Infrastructure;
+global using System.Text;
+global using Application;
