@@ -11,7 +11,7 @@ namespace Auth.API.Controllers
     {
         private readonly IApiAuthenticationService _authenticationService = authenticationService;
 
-
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] ApiRegisterRequest  request)
         {
