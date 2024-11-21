@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.ViewModels.Authentication
+﻿namespace Domain.ViewModels.Authentication
 {
-    internal class OAuthLoginRequest
+    public class OAuthLoginRequest
     {
+        public string Email { get; set; }
+        public string Provider { get; set; } // e.g., Google, Facebook
+        public string Token { get; set; }   // OAuth provider's access token
     }
 }

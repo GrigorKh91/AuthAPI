@@ -1,35 +1,114 @@
-﻿using Application.Heplers;
-using Domain.ViewModels.Response;
-using Microsoft.AspNetCore.Identity;
-
-namespace Application.Services
+﻿namespace Application.Services
 {
-    public class ApiAuthenticationService(UserManager<User> userManager, SignInManager<User> signInManager, IJwtService jwtService) : IApiAuthenticationService
+    public class ApiAuthenticationService(UserManager<User> userManager,
+                                                                    SignInManager<User> signInManager,
+                                                                    UserManagerHelper userManagerHelper,
+                                                                    IJwtService jwtService,
+                                                                    IMapper mapper,
+                                                                    IConfiguration configuration) : IApiAuthenticationService
     {
         private readonly UserManager<User> _userManager = userManager;
         private readonly SignInManager<User> _signInManager = signInManager;
+        private readonly UserManagerHelper _userManagerHelper = userManagerHelper;
         private readonly IJwtService _jwtService = jwtService;
+        private readonly IMapper _mapper = mapper;
+        private readonly IConfiguration _configuration = configuration;
 
-        public async Task<ResponseDto> RegisterAsync(Domain.ViewModels.Authentication.RegisterRequest request)
+        public async Task<ResponseDto> RegisterAsync(ApiRegisterRequest registerRequest)
         {
-            if (request.Password != request.ConfirmPassword)
+            if (registerRequest.Password != registerRequest.ConfirmPassword)
             {
                 return ResponseDto.Error(ErrorMessages.PasswordsDoNotMatch);
             }
 
-            var user = new User { UserName = request.Email, Email = request.Email };
-            var result = await _userManager.CreateAsync(user, request.Password);
-
-            if (!result.Succeeded)
+            var user = await _userManagerHelper.FindUserAsync(registerRequest.Email);
+            if (user != null)
             {
-                return ResponseDto.Error("Registration failed.", result.Errors.Select(e => e.Description));
+                return ResponseDto.Error(ErrorMessages.EmailAlreadyInUse);
             }
 
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            // TODO: Send confirmation email with the token
+            user = _mapper.Map<User>(registerRequest);
+            user.CreatedDate = DateTime.UtcNow;
+            user.UserName = Guid.NewGuid().ToString();
+            user.OneTimeRegistrationCode = RandomNumber(RandomNumberLength.FourDigits);
+            user.OneTimeRegistrationDate = DateTime.UtcNow;
 
-            return ResponseDto.Success(null, "User registered successfully.");
+            var result = await _userManager.CreateAsync(user, registerRequest.Password);
+            if (!result.Succeeded)
+            {
+                return ResponseDto.Error(ErrorMessages.UserCreationFailed, result.Errors.Select(e => e.Description));
+            }
+
+            // TODO: Send confirmation email with the OneTimeRegistrationCode
+
+            return ResponseDto.Success(message: InfoMessages.WeSentVerificationCodeToYourEmail(RandomNumberLength.FourDigits));
         }
+
+        //public async Task<ResponseDto> ValidateAccountAsync(ValidateAccountRequest confirmEmailData)
+        //{
+        //    var user = await _userManager.FindByIdAsync(confirmEmailData.Id);
+        //    if (user != null && !user.DeletedDate.HasValue && !user.Inactive)
+        //    {
+        //        // check  token and expiration time
+        //        if (!user.OneTimeRegistrationDate.HasValue)
+        //        {
+        //            _response.HasError = true;
+        //            _response.Message = "Code expired. Resend a new code.";
+        //            return _response;
+        //        }
+        //        if (int.TryParse(_configuration["RegistrationExpiresInMinutes"], out int registrationExpiresInMinutes))
+        //        {
+        //            if ((DateTime.UtcNow - user.OneTimeRegistrationDate.Value).TotalMinutes > registrationExpiresInMinutes)
+        //            {
+        //                _response.HasError = true;
+        //                _response.Message = "Code expired. Resend a new code.";
+        //                return _response;
+
+        //            };
+        //            if (user.OneTimeRegistrationCode != confirmEmailData.OneTimeRegisterationCode)
+        //            {
+        //                _response.HasError = true;
+        //                _response.Message = "Invalid verification code";
+        //                return _response;
+        //            }
+        //            user.EmailConfirmed = true;
+        //            user.OneTimeRegistrationCode = null;
+        //            user.OneTimeRegistrationDate = null;
+
+        //            if (!string.IsNullOrEmpty(user.ReferredBy))
+        //            {
+        //                await SatAsConnectionToReferredByAsync(user.ReferredBy, user.Id);
+        //            }
+        //            await UserManager.UpdateAsync(user);
+
+        //            _response.Model = _mapper.Map<UserItem>(user);
+        //            return _response;
+        //        }
+        //        _response.HasError = true;
+        //        _response.Message = "Code expired. Resend a new code.";
+        //        return _response;
+        //    }
+        //    _response.HasError = true;
+        //    _response.Message = "Code expired. Resend a new code.";
+        //    return _response;
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public async Task<ResponseDto> LoginAsync(LoginRequest request)
         {
@@ -65,10 +144,22 @@ namespace Application.Services
             return ResponseDto.Success(token, "OAuth login successful.");
         }
 
-        public async Task<ResponseDto> LogoutAsync(LogoutRequest request)
+        public async Task<ResponseDto> LogoutAsync()
         {
             await _signInManager.SignOutAsync();
             return ResponseDto.Success(null, "Logout successful.");
         }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

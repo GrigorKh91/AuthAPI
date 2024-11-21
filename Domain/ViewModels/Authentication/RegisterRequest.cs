@@ -1,6 +1,6 @@
 ﻿namespace Domain.ViewModels.Authentication
 {
-    public class RegisterRequest
+    public class ApiRegisterRequest
     {
         public string Email { get; set; }
         public string Password { get; set; }

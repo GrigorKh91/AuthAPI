@@ -14,5 +14,9 @@ namespace Domain.EntityModels
         public DateTime? CreatedDate { get; set; }
         public int UpdatedByUserId { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public string OneTimeRegistrationCode { get; set; }
+        public DateTime? OneTimeRegistrationDate { get; set; }
+
+       // public ICollection<UserRole> UserRoles { get; set; }
     }
 }

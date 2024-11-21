@@ -2,6 +2,6 @@
 {
     public class UserRole : IdentityUserRole<int>
     {
-
+    
     }
 }

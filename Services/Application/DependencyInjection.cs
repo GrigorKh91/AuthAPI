@@ -1,5 +1,4 @@
 ﻿using Application.Mappings;
-using Domain.Options;
 
 namespace Application
 {
@@ -13,7 +12,9 @@ namespace Application
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<UserManagerHelper>();
 
+            services.AddAutoMapper(typeof(UserProfile).Assembly);
             services.AddAutoMapper(typeof(User).Assembly);
 
             return services;

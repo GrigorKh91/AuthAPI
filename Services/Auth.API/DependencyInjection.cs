@@ -1,4 +1,6 @@
-﻿namespace Auth.API
+﻿using Microsoft.OpenApi.Models;
+
+namespace Auth.API
 {
     public static class DependencyInjection
     {
@@ -8,6 +10,7 @@
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
+            services.AddSwaggerJWTConfiguration();
             services.AddJWTAuthentication(configuration);
 
 
@@ -26,7 +29,7 @@
             //    });
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
@@ -35,7 +38,7 @@
         }
 
 
-        private static void AddJWTAuthentication(this IServiceCollection services, IConfiguration configuration) 
+        private static void AddJWTAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(options =>
             {
@@ -57,6 +60,36 @@
               };
           });
         }
+        internal static void AddSwaggerJWTConfiguration(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(option =>
+            {
+                option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "Authentication Web API", Version = "1.0" });
 
+                option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT",
+                    Description = "Enter 'Bearer' [space] and then your valid token.\n\nExample: 'Bearer abc123xyz'",
+                    In = ParameterLocation.Header
+                });;
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference= new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id=JwtBearerDefaults.AuthenticationScheme
+                            }
+                        }, Array.Empty<string>()
+                    }
+                });
+
+            });
+        }
     }
 }

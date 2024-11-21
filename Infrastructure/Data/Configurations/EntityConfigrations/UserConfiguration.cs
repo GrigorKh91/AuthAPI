@@ -7,7 +7,8 @@
             builder.Property(s => s.FirstName).HasMaxLength(100);
             builder.Property(s => s.LastName).HasMaxLength(100);
             builder.Property(s => s.DisplayName).HasMaxLength(100);
- 
+            builder.Property(s => s.OneTimeRegistrationDate).HasMaxLength(50);
+
             builder.Property(s => s.Email).HasMaxLength(100).IsRequired();
             builder.Property(s => s.NormalizedEmail).HasMaxLength(100);
             builder.Property(s => s.PasswordHash).HasMaxLength(200);

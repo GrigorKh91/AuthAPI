@@ -1,12 +1,10 @@
-﻿using Domain.ViewModels.Response;
-
-namespace Application.Services.IServices
+﻿namespace Application.Services.IServices
 {
     public interface IApiAuthenticationService
     {
-        Task<ResponseDto> RegisterAsync(Domain.ViewModels.Authentication.RegisterRequest request);
-        Task<ResponseDto> LoginAsync(LoginRequest request);
-        Task<ResponseDto> OAuthLoginAsync(OAuthLoginRequest request);
-        Task<ResponseDto> LogoutAsync(LogoutRequest request);
+        Task<ResponseDto> RegisterAsync(ApiRegisterRequest registerRequest);
+        Task<ResponseDto> LoginAsync(LoginRequest  loginRequest);
+        Task<ResponseDto> OAuthLoginAsync(OAuthLoginRequest  oAuthLoginRequest);
+        Task<ResponseDto> LogoutAsync();
     }
 }

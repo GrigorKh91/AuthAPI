@@ -64,7 +64,8 @@ namespace Application.Services
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
 
-            return jwtToken?.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+            //return jwtToken?.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+            return default;
         }
     }
 }
