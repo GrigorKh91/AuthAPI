@@ -1,4 +1,7 @@
-﻿namespace Infrastructure
+﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+
+namespace Infrastructure
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : IdentityDbContext<User,
@@ -12,6 +15,7 @@
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
 
             builder.Entity<User>().ToTable("Users");

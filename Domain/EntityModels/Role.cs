@@ -9,13 +9,11 @@ namespace Domain.EntityModels
         public int Index { get; set; }
         public bool Inactive { get; set; }
         public string Key { get; set; }
-        public int DeletedByUserId { get; set; }
+        public int? DeletedByUserId { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public int CreatedByUserId { get; set; }
+        public int? CreatedByUserId { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public int UpdatedByUserId { get; set; }
+        public int? UpdatedByUserId { get; set; }
         public DateTime? UpdatedDate { get; set; }
-
-        //public ICollection<UserRole> UserRoles { get; set; }
     }
 }

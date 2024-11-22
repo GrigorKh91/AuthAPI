@@ -10,7 +10,7 @@ namespace Auth.API
             builder.Services
                                     .AddApiServices(builder.Configuration)
                                     .AddApplicationServices(builder.Configuration)
-                                    .AddInfrastructureServices(builder.Configuration, DatabaseProvider.Postgres);
+                                    .AddInfrastructureServices(builder.Configuration, DatabaseProvider.MSSQL);
 
 
             var app = builder.Build();

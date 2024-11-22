@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  auth.api:
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: .
+      dockerfile: Services/Auth.API/Dockerfile
+      
+  authdb:
+    image: postgres
+
+volumes:
+  postgres_auth:
+

@@ -13,13 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{54
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3FB6AABB-96D5-4497-8140-525A76D5E6FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.API", "Services\Auth.API\Auth.API.csproj", "{3DC740F3-5B57-4B4A-989D-BB849D9F955B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.API", "Services\Auth.API\Auth.API.csproj", "{3DC740F3-5B57-4B4A-989D-BB849D9F955B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Services\Application\Application.csproj", "{EBC94341-6E7E-4B45-B3FF-1AA846731D14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Services\Application\Application.csproj", "{EBC94341-6E7E-4B45-B3FF-1AA846731D14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7AE59BFF-3004-46F9-B854-D97C935FD0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{7AE59BFF-3004-46F9-B854-D97C935FD0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{375E823C-7959-45C8-8A74-CB3B07F1A1E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{375E823C-7959-45C8-8A74-CB3B07F1A1E2}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3CAD6F01-3F25-4CAA-BBB7-1FF553623E2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{375E823C-7959-45C8-8A74-CB3B07F1A1E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{375E823C-7959-45C8-8A74-CB3B07F1A1E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{375E823C-7959-45C8-8A74-CB3B07F1A1E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CAD6F01-3F25-4CAA-BBB7-1FF553623E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CAD6F01-3F25-4CAA-BBB7-1FF553623E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CAD6F01-3F25-4CAA-BBB7-1FF553623E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CAD6F01-3F25-4CAA-BBB7-1FF553623E2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
